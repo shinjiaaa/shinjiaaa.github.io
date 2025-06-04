@@ -5,9 +5,13 @@ date: 2025-06-01 21:03:36 +0530
 categories: Javascript NodeJS
 ---
 
-<img src="/assets/2.jpg" alt="KCC 억셉 ㅎㅎ" />
+```python
+print("안녕")
 
-![](/assets/4.jpg)
+<img src="/assets/2.jpg"/>
+KCC 억셉 ㅎㅎㅎ
+
+<img src="/assets/4.jpg" width="300" />
 오케스트라 보러 서울 갔어요
 
 ![](/assets/3.jpg)
@@ -16,3 +20,4 @@ categories: Javascript NodeJS
 
 ![](/assets/1.jpg)
 감자탕 푸파
+```
