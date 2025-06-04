@@ -11,3 +11,12 @@
   @import "toggle";
   @import "dark";
 {%- endif -%}
+
+.portfolio_image {
+  border-radius: 50%;   /* 동그란 모양 */
+  width: 150px;         /* 너비 조절 */
+  height: 150px;        /* 높이 조절 */
+  object-fit: cover;    /* 이미지 비율 유지하며 꽉 채우기 */
+  display: block;
+  margin: 0 auto;       /* 가운데 정렬 */
+}
