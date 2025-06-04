@@ -5,6 +5,8 @@ date: 2025-06-01 21:03:36 +0530
 categories: Python
 ---
 
+일반 텍스트
+
 ```python
-print("안녕")
+print("코드")
 ```
