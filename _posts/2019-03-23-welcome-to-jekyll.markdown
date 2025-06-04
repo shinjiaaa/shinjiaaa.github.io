@@ -5,7 +5,7 @@ date: 2025-06-01 21:03:36 +0530
 categories: Javascript NodeJS
 ---
 
-<img src="/assets/2.jpg" alt="KCC 억셉 ㅎㅎ" width="300" />
+<img src="/assets/2.jpg" alt="KCC 억셉 ㅎㅎ" />
 
 ![](/assets/4.jpg)
 오케스트라 보러 서울 갔어요
