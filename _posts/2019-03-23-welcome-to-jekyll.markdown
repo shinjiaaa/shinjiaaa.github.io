@@ -5,12 +5,15 @@ date: 2025-06-01 21:03:36 +0530
 categories: Python
 ---
 
-<img src="/assets/2.jpg"/>
-KCC 억셉 ㅎㅎㅎ
+javascript
+const Razorpay = require("razorpay");
 
-<img src="/assets/4.jpg" width="300" />
-오케스트라 보러 서울 갔어요
+let rzp = Razorpay({
+key_id: "KEY_ID",
+secret: "name",
+});
 
-```python
-print("안녕")
-```
+// capture request
+rzp.capture(payment_id, cost).then(function (data) {
+return 2;
+});
