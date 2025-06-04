@@ -1,12 +1,9 @@
 ---
 layout: post
-title: "일상 기록"
+title: "Hello World"
 date: 2025-06-01 21:03:36 +0530
-categories: Javascript NodeJS
+categories: Python
 ---
-
-```python
-print("안녕")
 
 <img src="/assets/2.jpg"/>
 KCC 억셉 ㅎㅎㅎ
@@ -14,10 +11,6 @@ KCC 억셉 ㅎㅎㅎ
 <img src="/assets/4.jpg" width="300" />
 오케스트라 보러 서울 갔어요
 
-![](/assets/3.jpg)
-강남 쿄코코
-진 짜 맛 있 다
-
-![](/assets/1.jpg)
-감자탕 푸파
+```python
+print("안녕")
 ```
