@@ -1,28 +1,19 @@
 ---
 layout: post
-title: "5월 마무리리"
+title: "일상 기록"
 date: 2025-06-01 21:03:36 +0530
 categories: Javascript NodeJS
 ---
 
-일상 기록
+![](/assets/2.jpg)
+KCC 억셉 ㅎㅎ
 
-```javascript
-const Razorpay = require("razorpay");
+![](/assets/4.jpg)
+오케스트라 보러 서울 갔어요
 
-let rzp = Razorpay({
-  key_id: "KEY_ID",
-  secret: "name",
-});
+![](/assets/3.jpg)
+강남 쿄코코
+진 짜 맛 있 다
 
-// capture request
-rzp.capture(payment_id, cost).then(function (data) {
-  return 2;
-});
-```
-
-Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll Talk][jekyll-talk].
-
-[jekyll-docs]: https://jekyllrb.com/docs/home
-[jekyll-gh]: https://github.com/jekyll/jekyll
-[jekyll-talk]: https://talk.jekyllrb.com/
+![](/assets/1.jpg)
+감자탕 푸파
