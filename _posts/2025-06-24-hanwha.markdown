@@ -3,8 +3,10 @@ layout: post
 title: "한화시스템"
 date: 2025-06-25 14:10:00 +0900
 categories: career
-tags: [한화시스템, 방산, 채용분석, 학사]
+excerpt_separator: <!--more-->
 ---
+
+<!--more-->
 
 ## 학사 졸업자가 지원 가능한 분야
 
