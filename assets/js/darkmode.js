@@ -1,5 +1,6 @@
 function toggleDarkMode() {
     const DARK_CLASS = 'dark';
+    
     var body = document.querySelector("body");
     if (body.classList.contains(DARK_CLASS)) {
         setCookie('theme', 'light');
