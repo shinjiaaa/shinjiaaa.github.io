@@ -1,0 +1,51 @@
+---
+layout: post
+title: "[Neo4j] .dump file 불러오기"
+date: 2025-04-09 13:44:51 +0900
+categories: DB
+excerpt_separator: <!--more-->
+---
+
+그래요 마자요 내가 까먹을까 봐 작성하는 글이에요 `_`
+Window 10 환경 기준으로 작성하였습니다!
+
+- 우와 논문 억셉됐어요
+  KCC 2025: Neo4j 기반 소프트웨어 추적성 질의 시스템 및 정량적 평가
+  Repository: https://github.com/shinjiaaa/sealab
+
+### 0. 기본 세팅
+
+우선 Neo4j Desktop을 다운로드합니다.
+https://neo4j.com/download/
+
+그리고 Neo4j는 Java 기반이기 때문에 Java도 다운로드해야 합니다.
+https://www.oracle.com/java/technologies/downloads/?er=221886#jdk24-windows
+
+### 1. Neo4j 세팅
+
+최초 실행 후 skip한 후, Projects에 DB를 생성합니다.
+
+위 사진은 실행 중인 이미지입니다.
+즉, Stop이 아니라 Start라고 되어 있는 게 정상적인 상태!
+
+### 2. Window PowerShell 관리자 권한으로 실행
+
+'''python
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+'''
+위 명령어를 입력 후 Y 또는 A 치고 Enter.
+신뢰할 수 있는 로컬 스크립트 실행을 허용하는 과정입니다.
+
+'''python
+cd "C:\Users\lab\.Neo4jDesktop\relate-data\dbmss\dbms-랜덤텍스트\bin"
+'''
+해당 경로로 위치를 이동합니다.
+
+'''python
+.\neo4j-admin database load neo4j --from-path="C:\Users\lab\Downloads\dump-folder" --overwrite-destination=true
+'''
+자신의 .dump 파일이 있는 경로로 수정하여 명령어를 입력합니다.
+! dump 파일은 폴더에 넣은 후, 해당 폴더를 지정해야 합니다. (Neo4j 5 기준)
+저는 dump-floder라는 폴더 안에 dump 파일을 넣어 줬습니다.
+
+이렇게 (워닝이 좀 있긴 하지만) dump 파일을 불러오는 데에 성공하였습니다!
