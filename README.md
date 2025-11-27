@@ -58,14 +58,14 @@ The placeholder portfolio image can be replaced by the desired image by placing 
 
 ```yaml
 plainwhite:
-  portfolio_image:  "assets/portfolio.png" # the path from the base directory of the site to the image to display (no / at the start)
+  portfolio_image: "assets/portfolio.png" # the path from the base directory of the site to the image to display (no / at the start)
 ```
 
 To use a different image for dark mode, e.g. with different colors that work better in dark mode, add a `portfolio_image_dark` entry in addition to the `portfolio_image`.
 
 ```yaml
 plainwhite:
-  portfolio_image:      "assets/portfolio.png"
+  portfolio_image: "assets/portfolio.png"
   portfolio_image_dark: "assets/portfolio_dark.png"
 ```
 
@@ -158,9 +158,9 @@ Tagline can be multiline in this way
 ```yaml
 plainwhite:
   tagline: |
-  First Line. 
+  First Line.
 
-  Second Line. 
+  Second Line.
 
   Third Line.
 ```
@@ -209,7 +209,8 @@ When your theme is released, only the files in `_layouts`, `_includes`, `_sass` 
 To add a custom directory to your theme-gem, please edit the regexp in `plainwhite.gemspec` accordingly.
 
 ## Donation
-If this project help you reduce time to develop, you can give me a cup of coffee :) 
+
+If this project help you reduce time to develop, you can give me a cup of coffee :)
 
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://paypal.me/thelehhman)
 
@@ -220,3 +221,11 @@ The theme is available as open source under the terms of the [MIT License](https
 ## More themes
 
 - [Texture](https://github.com/samarsault/texture)
+
+# shinjiaaa.github.io
+
+Git Blog
+
+## 오늘 저녁
+
+소고기카레
