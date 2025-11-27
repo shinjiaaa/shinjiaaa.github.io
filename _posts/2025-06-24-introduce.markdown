@@ -8,10 +8,10 @@ excerpt_separator: <!--more-->
 
 <!--more-->
 
-## contact
+## Contact
 
-Email: ssshinjia@gmail.com
-Location: SEALAB @ Aerospace Engineering, Aerospace Systems Engineering 23.
+- Email: ssshinjia@gmail.com
+- Location: SEALAB @ Aerospace Engineering, Aerospace Systems Engineering 23.
 
 ## Recode
 
