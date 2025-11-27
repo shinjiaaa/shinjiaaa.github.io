@@ -6,6 +6,8 @@ categories: DB
 excerpt_separator: <!--more-->
 ---
 
+<!--more-->
+
 그래요 마자요 내가 까먹을까 봐 작성하는 글이에요 `_`
 Window 10 환경 기준으로 작성하였습니다!
 
