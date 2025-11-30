@@ -1,0 +1,206 @@
+---
+layout: post
+title: "영상 데이터셋 .arrow train (실패 💀)"
+date: 2025-11-02 14:00:00 +0900
+categories: LAB
+excerpt_separator: <!--more-->
+---
+
+<!--more-->
+
+안녕하세요...
+
+ImportError: To support decoding videos, please install 'torchcodec'.
+위 오류에 호되게 혼나고 작성하는 글입니닷...
+구글링을 하니까 다들 당한 사람만 있고 해결한 사람은 없는 상황인지라 제가 저를 가지고 실험을 해 보겠습니다
+
+해당 글은 오류 과정에 대해 기술해 놓은 글입니다 ^.ㅜ
+
+사용한 영상 데이터셋: https://huggingface.co/datasets/nexar-ai/nexar_collision_prediction
+
+nexar-ai/nexar_collision_prediction · Datasets at Hugging Face
+
+The Nexar collision prediction dataset comprises videos from Nexar dashcams. Videos have a resolution of 1280x720 at 30 frames per second and typically have about 40 seconds of duration. The dataset contains 1500 videos where half show events where there w
+
+huggingface.co
+해당 데이터셋은 nexar에서 개최한 충돌 데이터셋 대회에 제출된 데이터셋 중 하나입니다.
+데이터셋에 대한 논문도 있으니 관심 있으시다면 읽어보시는 것도 추천합니다!
+간략히 설명하자면 차량 내 블랙박스에서 촬영한 충돌 데이터셋을 충돌/미충돌로 분류한 영상(.arrow) 데이터셋입니다.
+
+패키지 설치부터 시작하겠습니다.
+가상환경 만든 후 진행하는 거 추천드립니다!
+
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+
+데이터셋이 허깅페이스에서 지원하는 것이므로 datasets를 다운로드합니다.
+
+pip install datasets
+
+영상 로드를 위해 decord도 설치합니다.
+
+pip install decord
+
+파이토치에서 만든 비디오 처리 라이브러리입니다. 마찬가지로 설치해 줍니다.
+
+pip install pytorchvideo
+
+opencv도 사용하기 위해 아래 명령어를 입력해 주세요!
+
+pip install opencv-python
+
+그리고 오류의 원인인 라이브러리도 설치합니다.
+
+pip install torchcodec
+이제 본격적으로 오류 해결에 몰두해 보겠습니다...
+우선 이렇게 하고 임시 train 코드를 실행하면 아래와 같은 오류가 뜹니다.
+
+FFmpeg version 4: [WinError 127] 지정된 프로시저를 찾을 수 없습니다 [end of libtorchcodec loading traceback]
+
+혹은 앞서 설명드린 ImportError: To support decoding videos, please install 'torchcodec'.가 뜰 텐데요.
+저는 다음과 같은 시도를 하였습니다.
+
+pip install -U datasets[audio]
+결과는 아래와 같이 나왔습니다.
+
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts. torchaudio 2.5.1+cu121 requires torch==2.5.1+cu121, but you have torch 2.9.0 which is incompatible. torchvision 0.20.1+cu121 requires torch==2.5.1+cu121, but you have torch 2.9.0 which is incompatible. Successfully installed datasets-4.4.0
+그래서 audio만 따로 설치해 봤습니다.
+
+pip install torchaudio
+설치 후 실행해도 여전히 ImportError가 반환되었습니다...
+여러 이유들을 추측해 봤는데요. 우선 CUDA의 버전 문제일 수 있다 생각하여 현재 다운로드된 패키지 삭제 후 다른 버전들로 재시도하였지만 실패했습니다.
+앞서 말씀드린 것처럼 가상 환경의 문제도 아니었고, ffmpeg를 못 찾는 경우에 대비하여 코드에 직접 경로를 매칭해 줬는데 여전하였습니다.
+저는 그렇게 15시간을 썼고... 주어진 시간이 많지 않았고... 멘탈이 갈렸기에... 다음을 기약하며 colab에서 재시도하였습니다. 윈도우 유저가 아닌 분은 아래 명령어를 통해 ImportError를 해결하셨더라구요! 참고하시라고 삽입합니다.
+
+apt update && apt install ffmpeg -y
+새로운 마음가짐으로 colab에서 다시 진행해 보겠습니다 ^ㅁ^
+상단 바에서 런타임 -> 런타임 유형 변경 -> GPU로 변경 후 진행해 주세요!
+
+라이브러리를 다시 설치해 보겠습니다.
+
+!pip install datasets decord torchvision torch
+
+그리고 허깅페이스에서 데이터셋을 다운로드하기 위해 토큰을 연결합니다.
+토큰 발급 방법은 다른 글에 작성해 두겠습니다. 지금은 작성할 여력이 없습니다.......
+
+from huggingface_hub import login
+
+HF_TOKEN = ""
+login(HF_TOKEN)
+
+다운로드를 시작합니다.
+
+from datasets import load_dataset
+dataset = load_dataset("nexar-ai/nexar_collision_prediction", split="train")
+이미 다운로드하신 분이라면 아래 코드에 경로를 변경하여 입력해 주세요!
+
+from datasets import Dataset
+
+dataset = Dataset.from_file("/content/nexar_collision_prediction-train.arrow")
+
+설치가 완료되었으면 파이토치 데이터셋을 정의해 줍니다.
+
+import torch
+from torch.utils.data import Dataset
+import decord
+import numpy as np
+import torchvision.transforms as T
+
+decord.bridge.set_bridge('torch')
+
+class NexarDataset(Dataset):
+def **init**(self, hf_dataset, num_frames=16, resize=(224,224)):
+self.dataset = hf_dataset
+self.num_frames = num_frames
+self.resize = resize
+self.transform = T.Compose([
+T.Resize(resize),
+T.ConvertImageDtype(torch.float32),
+T.Normalize(mean=[0.485,0.456,0.406],
+std=[0.229,0.224,0.225])
+])
+
+    def __len__(self):
+        return len(self.dataset)
+
+    def __getitem__(self, idx):
+        item = self.dataset[idx]
+        video_path = item["video_path"]
+        label = torch.tensor(item["label"], dtype=torch.long)
+
+        vr = decord.VideoReader(video_path)
+        total_frames = len(vr)
+        indices = np.linspace(0, total_frames-1, self.num_frames, dtype=int)
+        frames = vr.get_batch(indices)  # (T,H,W,C)
+        frames = frames.permute(0,3,1,2) # (T,C,H,W)
+        frames = self.transform(frames)
+        return frames, label
+
+이제 모델 정의와 트레인 코드를 실행해 봅시다.
+
+import torch.nn as nn
+import torchvision.models as models
+from torch.utils.data import DataLoader
+from tqdm import tqdm
+
+train_ds = NexarDataset(dataset)
+train_loader = DataLoader(train_ds, batch_size=2, shuffle=True)
+
+class CollisionClassifier(nn.Module):
+def **init**(self):
+super().**init**()
+base = models.resnet18(weights=models.ResNet18_Weights.DEFAULT)
+base.fc = nn.Identity()
+self.backbone = base
+self.fc = nn.Linear(512, 2)
+
+    def forward(self, x):
+        B, T, C, H, W = x.shape
+        x = x.view(B*T, C, H, W)
+        feats = self.backbone(x)
+        feats = feats.view(B, T, 512)
+        feats = feats.mean(dim=1)
+        logits = self.fc(feats)
+        return logits
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+model = CollisionClassifier().to(device)
+criterion = nn.CrossEntropyLoss()
+optimizer = torch.optim.Adam(model.parameters(), lr=1e-4)
+def train_one_epoch(model, dataloader, optimizer, criterion, device):
+model.train()
+total_loss, total_correct = 0,0
+for frames, labels in tqdm(dataloader):
+frames, labels = frames.to(device), labels.to(device)
+logits = model(frames)
+loss = criterion(logits, labels)
+
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+
+        total_loss += loss.item() * frames.size(0)
+        total_correct += (logits.argmax(1) == labels).sum().item()
+
+    return total_loss/len(dataloader.dataset), total_correct/len(dataloader.dataset)
+
+EPOCHS = 5
+for epoch in range(EPOCHS):
+loss, acc = train_one_epoch(model, train_loader, optimizer, criterion, device)
+print(f"Epoch {epoch+1}/{EPOCHS} | Loss: {loss:.4f} | Acc: {acc:.4f}")
+실험을 위해 우선 5 에폭으로만 진행하였습니다.
+
+진행이 잘 되었다면 에폭 수 조절 후, 아래 코드를 통해 모델을 저장하면 완성입니다.
+
+torch.save(model.state_dict(), "collision_model.pth")
+
+그치만 저는 메모리 문제를 마주하고 말았습니다!!!
+세상에이런일이.GPU도감당못하는게있다고?
+
+std::bad_alloc
+새로운 계정을 만들어서 하는 꼼수(ㅎ)도 해 봤는데 실패했어요
+
+(참고: https://forky-develop.tistory.com/entry/Colab%EC%9D%98-GPU%EC%9A%A9%EB%9F%89-%EC%9D%B4%EC%8A%88%EC%97%90-%EB%8C%80%ED%95%9C-%ED%95%B4%EA%B2%B0%EB%B2%95)
+
+- 용량은 런타임 설정에서 TPU 선택하면 해결됩니다!
+  근데 코랩에서도 위에 나온 import error가 떠서 저는 다른 데이터셋을 사용하려구요 ㅜ.ㅜ
+  당장은 시간을 더 쓸 수가 없어서 추후 .arrow 파일 자체에 대해 공부하고... 어떻게 하면 해결할 수 있는지... 글을... 올려... 보께요..........
